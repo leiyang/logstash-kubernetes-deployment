@@ -64,8 +64,12 @@ metadata:
 data:
   logstash.conf: |-
     input {
-      tcp {
+      beats {
         port => 5044
+        codec => "json"
+      }
+      http {
+        port => 5003
         codec => "json"
       }
     }
@@ -110,6 +114,7 @@ metadata:
     kubernetes.io/cluster-service: "true"
     addonmanager.kubernetes.io/mode: Reconcile
 spec:
+  replicas: 1
   selector:
     matchLabels:
       k8s-app: logstash
